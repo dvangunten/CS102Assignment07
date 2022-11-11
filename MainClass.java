@@ -1,42 +1,114 @@
-package towersofhanoi4;
+package mergesort;
+
 
 public class MainClass 
 {
 
-    
-   public static void main(String[] args)
-    {
-        towerOfHanoi(4, "A", "B", "C", "D");
+    public static void main(String args[])  
+    {  
+        int unsorted[] = {3, 123, 53, 42, 79, 44, 23, 98};  
+        int unsortedLength = unsorted.length;
         
+        MainClass sortedArray = new MainClass(); 
         
-        
-    }
-    static void towerOfHanoi(int numOfDisks, String from, String to, String helper, String helper2)
-    {
-        
-        
-        
-        if(numOfDisks == 0)
+        System.out.println("The unsorted array is: ");  
+        for (int i = 0; i < unsorted.length; i++)
         {
-           
-            return;
-            
+            System.out.print(unsorted[i] + " ");
         }
-        if(numOfDisks == 1)
+
+        sortedArray.mergeSort(unsorted, 0, unsortedLength - 1); 
+        
+        System.out.println("\nThe sorted array is: ");
+        for (int i = 0; i < unsorted.length; i++)
         {
-            System.out.println("Move disk " + numOfDisks + " from rod " + from + " to rod " + to);
-            
-            
-            return;
+            System.out.print(unsorted[i] + " ");
         }
         
-        towerOfHanoi(numOfDisks - 2, from, helper, to, helper2 );
-        System.out.println("Move disk " + (numOfDisks - 1) + " from rod " + from + " to rod " + helper2);
-        System.out.println("Move disk " + numOfDisks + " from rod " + from + " to rod " + to);
-        System.out.println("Move disk " + (numOfDisks - 1) + " from rod " + helper2 + " to rod " + to);
-        towerOfHanoi(numOfDisks - 2, from, helper, to, helper2); 
+          
+    }  
+    //===================================================
+    void mergeSort(int unsorted[], int begin, int end)  
+    {  
         
+        
+        if (begin < end)   
+        {  
+            
+            int middle = (begin + end) / 2;  
+            
+            mergeSort(unsorted, begin, middle);  
+            mergeSort(unsorted, middle + 1, end);  
+            mergeTempArrays(unsorted, begin, middle, end);  
+            
+            
+        }  
+        
+    }      
+    //========================================================
+    void mergeTempArrays(int unsorted[], int begin, int middle, int end)    
+    {    
+    int i, j;  
+    int firstHalf = middle - begin + 1;    
+    int secondHalf = end - middle;    
+      
+     
+        int leftHalf[] = new int[firstHalf];  
+        int rightHalf[] = new int[secondHalf];  
+      
+      
+    for (i = 0; i < firstHalf; i++)  
+    {
+        leftHalf[i] = unsorted[begin + i]; 
+    }
+    
+    for (j = 0; j < secondHalf; j++)  
+    {
+        rightHalf[j] = unsorted[middle + 1 + j];    
+    } 
+    //=================================================
+    i = 0; 
+    j = 0;   
+    int z = begin;  
+    
+      
+    while (i < firstHalf && j < secondHalf)    
+    {    
+        
+        if(leftHalf[i] <= rightHalf[j])    
+        {    
+            unsorted[z] = leftHalf[i];    
+            i++;  
+            
+        }   
+        
+        else    
+        {    
+            unsorted[z] = rightHalf[j];    
+            j++;    
+        }    
+        z++;   
+        
+    }  
+    
+    while (i < firstHalf)    
+    {    
+        unsorted[z] = leftHalf[i];    
+        i++;    
+        z++; 
+        
+    }    
+      
+    while (j < secondHalf)    
+    {    
+        unsorted[z] = rightHalf[j];    
+        j++;    
+        z++; 
         
     }
     
+}    
+  
+    
+  
 }
